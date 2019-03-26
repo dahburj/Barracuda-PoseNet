@@ -2,7 +2,7 @@
 
 Using Unity 2019.1.0b8
 
-Real-time WebCam test scene located in POSENET/SCENES/Test 
+Real-time WebCam test scene located in POSE-NET/Scenes/Test 
 
 Getting 30-50FPS on a Macbook Pro Mid2015 Intel Core i7, 16GB memory DDR3
 
