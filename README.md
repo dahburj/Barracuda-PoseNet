@@ -6,7 +6,7 @@ Real-time WebCam test scene located in Assests/POSE-NET/Scenes/Test
 
 Getting 30-50FPS on a Macbook Pro Mid2015 Intel Core i7, 16GB memory DDR3
 
-I got to this point with major help from these repos and alot of code here is re-used or based on theirs;-
+I got to this point with major help from these repos and alot of code here is re-used or based on theirs:-
   - https://github.com/keijiro/AsyncCaptureTest.git
   - https://github.com/infocom-tpo/PoseNet-Unity.git
   - https://github.com/rwightman/posenet-python.git
