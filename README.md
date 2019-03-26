@@ -11,7 +11,7 @@ I got to this point with major help from these repos and alot of code here is re
   - https://github.com/infocom-tpo/PoseNet-Unity.git
   - https://github.com/rwightman/posenet-python.git
   
-I'm using this Texture resize package;
+I'm using this Texture resize package
 https://assetstore.unity.com/packages/tools/utilities/resize-pro-61344
 
 If you don't want to buy it and have your own way of resizing just uncomment out lines using the package.
