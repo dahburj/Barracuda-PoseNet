@@ -16,7 +16,7 @@ I got to this point with major help from these repos and alot of code here is re
 I'm using this Texture resize package
 https://assetstore.unity.com/packages/tools/utilities/resize-pro-61344
 
-If you don't want to buy it and have your own way of resizing just uncomment out lines using the package.
+If you don't want to buy it and have your own way of resizing just comment out the lines using the package.
   
   
 I feel like the code and performance could be made so much better, I began trying to see if I can make use of Unity's new ECS system but it's my first time experiementing with parallel jobs and could not get it to work with what I know. I'll update as I learn more about using custom jobs and Barracuda as there isn't alot of information on the topic out there.
