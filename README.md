@@ -2,7 +2,7 @@
 
 Using Unity 2019.1.0b8
 
-Real-time WebCam test scene located in Assests/POSE-NET/Scenes/Test 
+Real-time WebCam test scene is located in Assests/POSE-NET/Scenes/Test
 
 Video https://youtu.be/MievgkYDquc
 
