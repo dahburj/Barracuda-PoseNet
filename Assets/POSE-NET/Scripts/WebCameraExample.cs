@@ -36,6 +36,7 @@ public class WebCameraExample : MonoBehaviour {
 
     Model model;
     Barracuda.IWorker worker;
+    Camera _camera;
 
     Queue<AsyncGPUReadbackRequest> _requests = new Queue<AsyncGPUReadbackRequest>();
  
@@ -43,12 +44,8 @@ public class WebCameraExample : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        if(posenet == null){
+        _camera = GetComponent<Camera>();
 
-            posenet = new PoseNet();
-            debugText.text = "Model Loaded";
-
-        }
 
         WebCamDevice[] devices = WebCamTexture.devices;
 
@@ -59,14 +56,22 @@ public class WebCameraExample : MonoBehaviour {
             webcamTexture = new WebCamTexture(devices[0].name, Screen.width, (Screen.height / 2), FPS);
 
         }
-        
-    //    GetComponent<Renderer>().material.mainTexture = webcamTexture;
+
+        if (posenet == null)
+        {
+
+            posenet = new PoseNet();
+            debugText.text = "Model Loaded";
+
+        }
+
+        //    GetComponent<Renderer>().material.mainTexture = webcamTexture;
 
         m_Display.material.mainTexture = webcamTexture;
 
-        model = ModelLoader.LoadFromStreamingAssets(modelName + ".bytes");
+    //    model = ModelLoader.LoadFromStreamingAssets(modelName + ".bytes");
 
-        worker = BarracudaWorkerFactory.CreateWorker(BarracudaWorkerFactory.Type.ComputeFast, model);
+     //   worker = BarracudaWorkerFactory.CreateWorker(BarracudaWorkerFactory.Type.Compute, model);
         
         webcamTexture.Play();
 
@@ -77,6 +82,8 @@ public class WebCameraExample : MonoBehaviour {
     //    StartCoroutine(PoseUpdateFromStart());
 
         Debug.Log("Made it to the end of start");
+
+    //    worker.Dispose();
         
     }
 	
@@ -102,10 +109,9 @@ public class WebCameraExample : MonoBehaviour {
 
                 if (Time.frameCount % 1 == 0 && !isPosing)
                 {
-                    var _camera = GetComponent<Camera>();
                     //Create Texture2D()
 
-                    StartCoroutine(PoseUpdateNoTex(buffer, _camera.pixelWidth, _camera.pixelHeight, .001f));
+                    StartCoroutine(PoseUpdateNoTex(buffer, _camera.scaledPixelWidth, _camera.scaledPixelHeight, .001f));
                     isPosing = true;
                     // var result = new AsyncCompletionSource<PoseNet.Pose[]>();
                     // StartCoroutine(PoseAsync(result, buffer, GetComponent<Camera>().pixelWidth, GetComponent<Camera>().pixelHeight));
@@ -146,50 +152,62 @@ public class WebCameraExample : MonoBehaviour {
     {
         //    isPosing = true;
 
-        //        var _model = ModelLoader.LoadFromStreamingAssets(modelName + ".bytes");
+        var _model = ModelLoader.LoadFromStreamingAssets(modelName + ".bytes");
 
-        //        var _worker = BarracudaWorkerFactory.CreateWorker(BarracudaWorkerFactory.Type.Compute, _model);
+        //var _model = model;
 
-        var _model = model;
-        var _worker = worker;
+        var _worker = BarracudaWorkerFactory.CreateWorker(BarracudaWorkerFactory.Type.Compute, _model);
+        //var _worker = worker;
 
-        var texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
-        texture.SetPixels32(buffer.ToArray());
-        texture.Apply();
+        var frame = new Texture2D(width, height, TextureFormat.RGB24, false);
+        frame.SetPixels32(buffer.ToArray());
+        frame.Apply();
 
-        yield return new WaitForSeconds(
-        secondsToWait);
+        //yield return new WaitForSeconds(secondsToWait);
 
-        texture.ResizePro(Width, Height, false, false);
+        yield return new WaitForEndOfFrame();
+
+        //frame.ResizePro(Width, Height, false, false);
+        posenet.scale(frame, Width, Height, FilterMode.Bilinear);
+
+        // Save frame image jpg to disk for debugging
+        /// var randomInt = UnityEngine.Random.Range(0, 100000000000000000);
+        /// File.WriteAllBytes(Application.persistentDataPath + "/pose-" + randomInt + ".jpg", frame.EncodeToJPG());
+        /// Debug.Log("Saved size converted image path: " + Application.persistentDataPath + "/pose-" + randomInt + ".jpg");
+
         var inputs = new Dictionary<string, Tensor>();
 
-        var tensor = new Tensor(texture, 3);
+        var tensor = new Tensor(frame, 3);
         inputs.Add("image", tensor);
 
         _worker.ExecuteAndWaitForCompletion(inputs);
 
-        yield return new WaitForSeconds(secondsToWait);
+        //yield return new WaitForSeconds(secondsToWait);
+        yield return new WaitForEndOfFrame();
  
         var Heatmap = _worker.Fetch("heatmap");
 
-        yield return new WaitForSeconds(secondsToWait);
+        //yield return new WaitForSeconds(secondsToWait);
+        yield return new WaitForEndOfFrame();
 
         var Offset = _worker.Fetch("offset_2");
 
-        yield return new WaitForSeconds(secondsToWait);
+        //yield return new WaitForSeconds(secondsToWait);
+        yield return new WaitForEndOfFrame();
 
         var Dis_fwd = _worker.Fetch("displacement_fwd_2");
 
-        yield return new WaitForSeconds(secondsToWait);
+        //yield return new WaitForSeconds(secondsToWait);
+        yield return new WaitForEndOfFrame();
 
         var Dis_bwd = _worker.Fetch("displacement_bwd_2");
 
-        yield return new WaitForSeconds(secondsToWait);
+        //yield return new WaitForSeconds(secondsToWait);
+        yield return new WaitForEndOfFrame();
 
         poses = posenet.DecodeMultiplePosesOG(Heatmap, Offset, Dis_fwd, Dis_bwd, 
             outputStride: 16, maxPoseDetections: 1, scoreThreshold: 0.8f, nmsRadius: 30);
 
-     //   yield return new WaitForSeconds(1f);
 
         Offset.Dispose();
         Dis_fwd.Dispose();
@@ -197,14 +215,10 @@ public class WebCameraExample : MonoBehaviour {
         Heatmap.Dispose();
         _worker.Dispose();
 
-    //    yield return new WaitForEndOfFrame();
-
-    //    yield return new WaitForSeconds(1f);
 
         isPosing = false;
 
-        texture = null;
-    //    _worker = null;
+        frame = null;
         inputs = null;
         
     //    Resources.UnloadUnusedAssets(); 
@@ -212,8 +226,5 @@ public class WebCameraExample : MonoBehaviour {
 
         yield return null;
     }
-
-
-     
 
 }

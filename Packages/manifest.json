@@ -1,22 +1,15 @@
 {
   "dependencies": {
-    "com.unity.ads": "2.0.8",
-    "com.unity.analytics": "3.3.2",
-    "com.unity.burst": "1.0.0-preview.6",
-    "com.unity.collab-proxy": "1.2.15",
-    "com.unity.collections": "0.0.9-preview.16",
-    "com.unity.entities": "0.0.12-preview.29",
-    "com.unity.jobs": "0.0.7-preview.9",
-    "com.unity.mathematics": "1.0.0-preview.1",
-    "com.unity.memoryprofiler": "0.1.0-preview.5",
-    "com.unity.package-manager-ui": "2.1.1",
-    "com.unity.purchasing": "2.0.1",
-    "com.unity.rendering.hybrid": "0.0.1-preview.9",
-    "com.unity.shadergraph": "5.6.1",
-    "com.unity.textmeshpro": "1.3.0",
-    "com.unity.timeline": "1.0.0",
-    "com.unity.vectorgraphics": "1.0.0-preview.23",
+    "com.unity.barracuda": "https://github.com/Unity-Technologies/barracuda-release.git",
+    "com.unity.collab-proxy": "1.2.16",
+    "com.unity.ide.rider": "1.1.4",
+    "com.unity.ide.vscode": "1.1.3",
+    "com.unity.test-framework": "1.1.3",
+    "com.unity.textmeshpro": "2.0.1",
+    "com.unity.timeline": "1.2.6",
+    "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
+    "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
     "com.unity.modules.audio": "1.0.0",
@@ -46,5 +39,11 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
+  },
+  "lock": {
+    "com.unity.barracuda": {
+      "revision": "HEAD",
+      "hash": "ab07fdb551eeca20fff21cdf6e02cdfe256ba6f4"
+    }
   }
 }

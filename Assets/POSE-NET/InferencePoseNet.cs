@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using Barracuda;
 using System.Linq;
-using MLAgents;
+//using MLAgents;
 
 public class InferencePoseNet : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class InferencePoseNet : MonoBehaviour
     {
         var model = ModelLoader.LoadFromStreamingAssets(modelName + ".bytes");
 
-        var worker = BarracudaWorkerFactory.CreateWorker(BarracudaWorkerFactory.Type.ComputeFast, model);
+        var worker = BarracudaWorkerFactory.CreateWorker(BarracudaWorkerFactory.Type.Compute, model);
 
         foreach(var layer in model.layers)
             Debug.Log("Layer " + layer.name + " does: " + layer.inputs);

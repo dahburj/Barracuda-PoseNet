@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/POSE-NET/Scenes/Test.unity
+    path: Assets/POSE-NET/Scenes/PoseNet-Scene.unity
     guid: 12c69314ae9194f6fb176bb65f18d86c
   m_configObjects: {}
