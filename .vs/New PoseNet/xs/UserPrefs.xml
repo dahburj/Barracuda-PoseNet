@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{035DC2A7-C724-BC00-46D2-640C476C6321}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/POSE-NET/Scripts/WebCameraExample.cs">
+    <Files>
+      <File FileName="Assets/POSE-NET/Scripts/PoseNet/DecodeMultiPoses.cs" Line="7" Column="1" />
+      <File FileName="Assets/POSE-NET/Scripts/WebCameraExample.cs" Line="169" Column="1" />
+      <File FileName="Assets/POSE-NET/Scripts/PoseNet/Types.cs" />
+      <File FileName="Assets/POSE-NET/Scripts/PoseNet/PoseNet.cs" />
+      <File FileName="Assets/POSE-NET/Scripts/PoseNet/Util.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="New PoseNet" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4d88785d-ffa3-4357-8949-1c4e26ea1b10" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
