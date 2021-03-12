@@ -5,7 +5,7 @@ Real-time WebCam test scene is located in Assests/POSE-NET/Scenes/Test
 
 Video https://youtu.be/MievgkYDquc
 
-Getting 30-50FPS on a Macbook Pro Mid2015 Intel Core i7, 16GB memory DDR3
+Getting 40-68FPS on a Macbook Pro Mid2015 Intel Core i7, 16GB memory DDR3
 
 I got to this point with major help from these repos and alot of code here is re-used or based on theirs:-
 
