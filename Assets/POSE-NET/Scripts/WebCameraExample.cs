@@ -22,6 +22,10 @@ public class WebCameraExample : MonoBehaviour {
     public int Width = 256;
     public int Height = 256;
     public int FPS = 30;
+    public int outputStride = 16;
+    public int maxPoseDetection = 1;
+    public float scoreThreshold = 0.55f;
+    public int nmsRadius = 24;
 
     public Text fpsText;
     public Text debugText;
@@ -81,7 +85,7 @@ public class WebCameraExample : MonoBehaviour {
 
     //    StartCoroutine(PoseUpdateFromStart());
 
-        Debug.Log("Made it to the end of start");
+        //Debug.Log("Made it to the end of start");
 
     //    worker.Dispose();
         
@@ -100,7 +104,7 @@ public class WebCameraExample : MonoBehaviour {
 
             if (req.hasError)
             {
-                Debug.Log("GPU readback error");
+                //Debug.Log("GPU readback error");
                 _requests.Dequeue();
             }
             else if (req.done)
@@ -134,6 +138,7 @@ public class WebCameraExample : MonoBehaviour {
             _requests.Enqueue(AsyncGPUReadback.Request(src));
         else
             Debug.Log("Too many requests take it easy boy");
+
         
         Graphics.Blit(src, dest);
 
@@ -173,7 +178,7 @@ public class WebCameraExample : MonoBehaviour {
         // Save frame image jpg to disk for debugging
         /// var randomInt = UnityEngine.Random.Range(0, 100000000000000000);
         /// File.WriteAllBytes(Application.persistentDataPath + "/pose-" + randomInt + ".jpg", frame.EncodeToJPG());
-        /// Debug.Log("Saved size converted image path: " + Application.persistentDataPath + "/pose-" + randomInt + ".jpg");
+        /// //Debug.Log("Saved size converted image path: " + Application.persistentDataPath + "/pose-" + randomInt + ".jpg");
 
         var inputs = new Dictionary<string, Tensor>();
 
@@ -205,8 +210,12 @@ public class WebCameraExample : MonoBehaviour {
         //yield return new WaitForSeconds(secondsToWait);
         yield return new WaitForEndOfFrame();
 
-        poses = posenet.DecodeMultiplePosesOG(Heatmap, Offset, Dis_fwd, Dis_bwd, 
-            outputStride: 16, maxPoseDetections: 1, scoreThreshold: 0.8f, nmsRadius: 30);
+        /*   poses = posenet.DecodeMultiplePosesOG(Heatmap, Offset, Dis_fwd, Dis_bwd, 
+               outputStride: 16, maxPoseDetections: 1, scoreThreshold: 0.8f, nmsRadius: 30);
+        */
+
+        poses = posenet.DecodeMultiplePosesOG(Heatmap, Offset, Dis_fwd, Dis_bwd,
+            outputStride: outputStride, maxPoseDetections: maxPoseDetection, scoreThreshold: scoreThreshold, nmsRadius: nmsRadius);
 
 
         Offset.Dispose();
